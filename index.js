@@ -4,13 +4,19 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-rl.question(`Login ? `, name => {
-  rl.question(`Login ? `, name => {
-    fetch('https://api-adresse.data.gouv.fr/search/?q=' + name)
-    .then((response) => response.text())
-    .then((body) => {
-        console.log(body);
-    });
-  })
-  rl.close();
+rl.question(`Login ? `, (login) => {
+  rl.question(`Mot de passe ? `, (password) => {
+    const data = { login, password };
+    fetch('http://localhost:8000' + data)
+      .then((response) => response.text())
+      .then((body) => {
+        console.log("Requête envoyé");
+      })
+      .catch((error) => {
+        console.error('Erreur lors de la requête :', error);
+      })
+      .finally(() => {
+        rl.close();
+      });
+  });
 });
