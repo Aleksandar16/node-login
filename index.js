@@ -7,10 +7,15 @@ const rl = readline.createInterface({
 rl.question(`Login ? `, (login) => {
   rl.question(`Mot de passe ? `, (password) => {
     const data = { login, password };
-    fetch('http://localhost:8000' + data)
-      .then((response) => response.text())
+    
+    fetch('http://localhost:3000/login', {
+      method: 'POST',
+      body: JSON.stringify(data), 
+    })
+      .then((response) => response.json())
       .then((body) => {
-        console.log("Requête envoyé");
+        console.log("Requête envoyée");
+        console.log("Réponse :", body); 
       })
       .catch((error) => {
         console.error('Erreur lors de la requête :', error);
